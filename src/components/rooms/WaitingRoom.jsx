@@ -1,22 +1,49 @@
 import { CardBody, CardTitle, CardText, Button } from "reactstrap"
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { useEffect, useState } from "react";
-const WaitingRoom = ({ waitingRoom, host, leaveRoom, socket }) => {
+const WaitingRoom = ({ waitingRoom, setWaitingRoom, user, socket }) => {
     const [started, setStarted] = useState(false)
-
-    useEffect(() => {
-        socket.on('started', () => {
-
+    // leaveRoom
+    const leaveRoom = () => {
+        socket.emit('leave', { username: user.username, roomCode: user.roomCode })
+        socket.on('leaveStatus', (data) => {
+            if (data === 'leaved successfully') {
+                setWaitingRoom(prev => {
+                    return {
+                        ...prev,
+                        status: false
+                    }
+                })
+            }
         })
-        return () => {
-            // Clean up the Socket.IO connection on unmount
-            socket.disconnect();
-        };
-    }, [])
-    const startGame = () => {
-        socket.emit('start', { count: waitingRoom.users.length, users: waitingRoom.users })
-        // socket.on('started', () => setStarted(true))
+        console.log('leaved')
     }
+    useEffect(() => {
+        socket.on('leaved', (data) => {
+            console.log(`${data.username} leaved room ${data.roomCode}`);
+            setWaitingRoom(prev => {
+                return {
+                    status: data?.rooms?.host !== undefined ? prev.status : false,
+                    host: data?.rooms?.host,
+                    users: data?.rooms?.users,
+                    roomCode: data.roomCode
+                }
+            })
+        })
+    }, [socket])
+    // useEffect(() => {
+    //     socket.on('started', () => {
+
+    //     })
+    //     return () => {
+    //         // Clean up the Socket.IO connection on unmount
+    //         socket.disconnect();
+    //     };
+    // }, [])
+    // const startGame = () => {
+    //     socket.emit('start', { count: waitingRoom.users.length, users: waitingRoom.users })
+    //     // socket.on('started', () => setStarted(true))
+    // }
     return (
         <CardBody
             style={{ paddingTop: '0px' }}>
@@ -27,17 +54,17 @@ const WaitingRoom = ({ waitingRoom, host, leaveRoom, socket }) => {
                 <ul style={{ listStyle: 'none' }}>
                     {waitingRoom.users.length === 0
                         ? <></>
-                        : waitingRoom.users.map((user, index) => (
+                        : waitingRoom.users.map((username, index) => (
                             <li key={index}>
                                 <MdOutlineAccountCircle />
-                                <span className="mx-2" style={{ color: host === user ? 'green' : 'dark' }}>{user}</span>
+                                <span className="mx-2" style={{ color: user.username === username ? 'green' : 'dark' }}>{username}</span>
                             </li>
                         ))
                     }
                 </ul>
             </CardText>
             <CardText>
-                {host !== waitingRoom.host
+                {user.username !== waitingRoom.host
                     ? <div className='d-flex justify-content-center flex-column'>
                         <p>
                             Please wait for host to start the game
@@ -50,7 +77,7 @@ const WaitingRoom = ({ waitingRoom, host, leaveRoom, socket }) => {
                         <Button size='lg' className='mx-2' color='secondary' onClick={leaveRoom}>
                             Back
                         </Button>
-                        <Button size='lg' className='mx-2' color='success' onClick={startGame}>
+                        <Button size='lg' className='mx-2' color='success' >
                             Play now
                         </Button>
                     </div>

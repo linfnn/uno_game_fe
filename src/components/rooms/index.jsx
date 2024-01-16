@@ -106,44 +106,20 @@ const Rooms = () => {
             })
         }
     };
-    // leaveRoom
-    const leaveRoom = () => {
-        socket.emit('leave', { username: data.username, roomCode: data.roomCode })
-        socket.on('leaveStatus', (data) => {
-            if (data === 'leaved successfully') {
-                setWaitingRoom(prev => {
-                    return {
-                        ...prev,
-                        status: false
-                    }
-                })
-            }
-        })
 
-        // socket.on('leaved', (data) => {
-        //     console.log(`${data.username} leaved room ${data.roomCode}`);
-        //     setWaitingRoom(prev => {
-        //         return {
-        //             host: data.rooms.host,
-        //             users: data.rooms.users,
-        //             roomCode: data.roomCode
-        //         }
-        //     })
-        // })
-    }
-    useEffect(() => {
-        socket.on('leaved', (data) => {
-            console.log(`${data.username} leaved room ${data.roomCode}`);
-            setWaitingRoom(prev => {
-                return {
-                    status: data?.rooms?.host !== undefined ? prev.status : false,
-                    host: data?.rooms?.host,
-                    users: data?.rooms?.users,
-                    roomCode: data.roomCode
-                }
-            })
-        })
-    }, [socket])
+
+    // socket.on('leaved', (data) => {
+    //     console.log(`${data.username} leaved room ${data.roomCode}`);
+    //     setWaitingRoom(prev => {
+    //         return {
+    //             host: data.rooms.host,
+    //             users: data.rooms.users,
+    //             roomCode: data.roomCode
+    //         }
+    //     })
+    // })
+
+
     // startGame
     // useEffect(() => {
     //     if (started === true) {
@@ -180,7 +156,7 @@ const Rooms = () => {
                     {
                         waitingRoom.status === false
                             ? <LoginRoom setUsername={setUsername} setRoomCode={setRoomCode} invalidData={invalidData} joinRoom={joinRoom} />
-                            : <WaitingRoom waitingRoom={waitingRoom} host={data.username} leaveRoom={leaveRoom} socket={socket} />
+                            : <WaitingRoom waitingRoom={waitingRoom} setWaitingRoom={setWaitingRoom} user={data} socket={socket} />
                     }
                 </Card>
                 <PlayingRoom />
