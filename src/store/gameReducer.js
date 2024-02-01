@@ -28,8 +28,8 @@ const initialGameState = {
     userIndex: 0,
     animation: {
         time: {
-            display: 4,
-            state: 3
+            display: 3,
+            state: 2
         },
         display: false,
         state: '',
@@ -109,9 +109,9 @@ const gameCreateSlice = createSlice({
             state.animation.display = display
             state.animation.state = action.payload?.state || 'out'
             if (action.payload.flag === 'play') {
-                state.animation.time.display = 4
-                state.animation.time.state = 3
-                console.log('play flag')
+                state.animation.time.display = 3
+                state.animation.time.state = 2
+                console.log(pileCard)
                 state.animation.type.wild[1] = '#e67525'
                 if (pileCard === 'drawFour' || pileCard.includes('_draw')) {
                     state.animation.type.draw[0] = display
@@ -145,6 +145,7 @@ const gameCreateSlice = createSlice({
                     }
                 }
                 if (pileCard === 'wild') {
+                    state.animation.type.draw[0] = false
                     state.animation.type.wild[0] = display
                     state.animation.type.wild[1] = action.payload?.color || '#e67525'
                     if (action.payload?.color === 'b') {
@@ -169,8 +170,8 @@ const gameCreateSlice = createSlice({
             }
             if (action.payload.flag === 'draw') {
                 console.log('draw flag')
-                state.animation.time.display = 4
-                state.animation.time.state = 3
+                state.animation.time.display = 3
+                state.animation.time.state = 2
                 state.animation.type.draw[0] = display
                 state.animation.type.draw[1] = action.payload?.draw || 1
             }

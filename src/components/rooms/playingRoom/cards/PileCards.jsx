@@ -13,7 +13,7 @@ const PileCards = ({ imgs, innerWidth, room }) => {
     }
     const position = {
         position: room === 'room2' ? "absolute" : '',
-        top: "13%",
+        top: room === 'room2' ? "13%":'0%',
         height: room === 'room2' ? "60%" : '40%',
         //  : room === 'room4' ? '90%'
     }

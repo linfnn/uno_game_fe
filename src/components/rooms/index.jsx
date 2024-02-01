@@ -15,8 +15,8 @@ import { toggleRuleModal, toggleWinModal } from '../../store/globalReducer';
 
 
 const Rooms = () => {
-    const socket = io('https://uno-game-be.onrender.com');
-
+    const socket = io('http://localhost:8000');
+    // https://uno-game-be.onrender.com
     const [renderLogo, setRenderLogo] = useState(true)
 
     const { loginRoom, waitingRoom, playingRoom } = useSelector(state => state.roomReducer)
@@ -88,7 +88,7 @@ const Rooms = () => {
                     // Xử lý pile card
                     dispatch(setPileCards({ pileCard: data.pileCard, residualCards: data.residualCards }))
                     // Xử lý animation
-                    if (data.pileCard === 'drawFour' || data.pileCard.includes('_draw') || data.pileCard === 'wild' || data.pileCard.includes('skip')) {
+                    if (data.pileCard === 'drawFour' || data.pileCard.includes('_draw') || data.pileCard === 'wild' || data.pileCard.includes('skip') || data.pileCard.includes('_reverse')) {
                         dispatch(togglePlayAnimation({ display: true, state: 'in', pileCard: data.pileCard, draw: data.draw, color: data.wildColor, flag: 'play' }))
                     } else {
                         dispatch(togglePlayAnimation({ display: false, pileCard: data.pileCard, flag: 'removeAnimation' }))
@@ -137,7 +137,7 @@ const Rooms = () => {
                     // Xử lý pile card
                     dispatch(setPileCards({ pileCard: data.pileCard, residualCards: data.residualCards }))
                     // Xử lý animation
-                    dispatch(togglePlayAnimation({ display: true, flag: 'removeAnimation' }))
+                    dispatch(togglePlayAnimation({ display: false, flag: 'removeAnimation' }))
                     // Xử lý lượt đi người tiếp theo
                     dispatch(setTurn({ user: data.nextUser.username, suitCards: data.suitCards }))
                     dispatch(setCurrentUserIndex(data.nextUser.index))

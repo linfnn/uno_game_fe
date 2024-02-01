@@ -44,19 +44,15 @@ const PlayAnimation = () => {
     }, [animation.state, animation.time.state])
     const renderNoti = () => {
         if (animation.type.skip) {
-            console.log('skip')
             return <img width="70" height="70" src="https://img.icons8.com/external-prettycons-flat-prettycons/47/000000/external-forbidden-essentials-prettycons-flat-prettycons.png" alt="external-forbidden-essentials-prettycons-flat-prettycons" />
         }
         if (animation.type.reverse) {
-            console.log('reverse')
-            return <img width="60" height="60" src="https://img.icons8.com/papercut/60/synchronize.png" alt="synchronize"/>
+            return <img width="70" height="70" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="synchronize--v1" />
         }
-        if (animation.type.draw[0]) {
-            console.log('draw')
+        if (animation.type.draw[0] === true) {
             return `+${animation.type.draw[1]}`
         }
-        if (animation.type.wild[0]) {
-            console.log('wild')
+        if (animation.type.wild[0] === true) {
             return animation.type.wild[1].toUpperCase()
         }
     }

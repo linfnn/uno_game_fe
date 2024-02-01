@@ -37,17 +37,24 @@ const Room3 = ({ loginRoom, waitingRoom, userCards, pileCards, turn, socket }) =
                     className='d-flex align-items-center w-100 flex-column-reverse'
                 >
                     <div className={styles.user_wrapper}>
-                        <div className={animation.count_time_box}>
-                            {/* <CountTimeProgress progress={progress} time={countDown.time} /> */}
-                            <div className={animation.count_time_bar}></div>
-                        </div>
+                        {turn?.user === newUsers[0]
+                            ? <div className={animation.count_time_box}>
+                                {/* <CountTimeProgress progress={progress} time={countDown.time} /> */}
+                                <div className={animation.count_time_bar}></div>
+                            </div>
+                            : <></>
+                        }
                         <span>{newUsers[0]}</span>
                     </div>
                     {/* <div style={{ paddingLeft: 10 }}> */}
-                    <div className='d-flex flex-column' >
-                        <PlayDrawButton socket={socket} />
-                        <UserCards userCards={userCards} innerWidth={innerWidth} suitCards={turn.suitCards} />
-                    </div>
+                    {turn?.user === newUsers[0]
+                        ? <div className='d-flex flex-column' >
+                            <PlayDrawButton socket={socket} />
+                            <UserCards userCards={userCards} innerWidth={innerWidth} suitCards={turn.suitCards} />
+                        </div>
+                        : <UserCards userCards={userCards} innerWidth={innerWidth} suitCards={turn.suitCards} />
+                    }
+
                     {/* </div> */}
                 </div >
                 {/* Pile cards */}
@@ -63,9 +70,12 @@ const Room3 = ({ loginRoom, waitingRoom, userCards, pileCards, turn, socket }) =
                             >
                                 <div className={styles.user_wrapper} style={{ width: '100%' }}>
                                     <span>{user}</span>
-                                    <div className={animation.count_time_box}>
-                                        <div className={animation.count_time_bar}></div>
-                                    </div>
+                                    {turn?.user === user
+                                        ? <div className={animation.count_time_box}>
+                                            <div className={animation.count_time_bar}></div>
+                                        </div>
+                                        : <></>
+                                    }
                                 </div>
                                 {/* <div style={{ paddingLeft: 10 }}> */}
                                 <UserCards2 userCards={otherCards.find(obj => obj.username === user)} innerWidth={innerWidth} />

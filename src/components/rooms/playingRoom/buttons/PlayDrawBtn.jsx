@@ -29,27 +29,27 @@ const PlayDrawButton = ({ socket }) => {
     }
     const passCard = () => {
         setColor(false)
-        socket.emit('draw', { roomCode: waitingRoom.roomCode, pileCard: pileCards.topCard, index: userIndex })
+        socket.emit('pass', { roomCode: waitingRoom.roomCode, pileCard: pileCards.topCard, index: userIndex })
     }
     const disableCondition = turn.suitCards.length === 0 || play.card === ''
     const passCondition = turn.passBtn
     return (
         <>
             <div className='d-flex flex-column mb-3' style={{ zIndex: 100 }}>
-                <div className="d-flex justify-content-evenly ">
-                    <Button color='primary' onClick={drawCard}>Draw</Button>
-                    <Button color='success' disabled={disableCondition} onClick={playCard}>Play</Button>
-                    <Button color='warning' style={{ display: passCondition ? 'block' : 'none' }} onClick={passCard}>Pass</Button>
+                <div className="d-flex justify-content-center">
+                    <Button color='primary' className="mx-2" onClick={drawCard}>Draw</Button>
+                    <Button color='warning' className="mx-2" style={{ display: passCondition ? 'block' : 'none' }} onClick={passCard}>Pass</Button>
+                    <Button color='success' className="mx-2" disabled={disableCondition} onClick={playCard}>Play</Button>
                 </div>
                 {color
                     ? <>
-                        <div className='d-flex justify-content-evenly'>
-                            <Button color='danger' size="sm" onClick={() => playCardWithColor('r')}>Red</Button>
-                            <Button color='warning' size="sm" onClick={() => playCardWithColor('y')}>Yellow</Button>
-                            <Button color='success' size="sm" onClick={() => playCardWithColor('g')}>Green</Button>
-                            <Button color='primary' size="sm" onClick={() => playCardWithColor('b')}>Blue</Button>
+                        <div className='d-flex justify-content-center my-1'>
+                            <Button color='danger' className="mx-1" size="sm" onClick={() => playCardWithColor('r')}>Red</Button>
+                            <Button color='warning' className="mx-1" size="sm" onClick={() => playCardWithColor('y')}>Yellow</Button>
+                            <Button color='success' className="mx-1" size="sm" onClick={() => playCardWithColor('g')}>Green</Button>
+                            <Button color='primary' className="mx-1" size="sm" onClick={() => playCardWithColor('b')}>Blue</Button>
                         </div>
-                        <p>Please choose color</p>
+                        <p className="my-0 py-0">Please choose color</p>
                     </>
                     : <></>
                 }

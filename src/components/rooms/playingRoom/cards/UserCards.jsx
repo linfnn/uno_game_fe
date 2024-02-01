@@ -21,7 +21,7 @@ const UserCards = ({ userCards, innerWidth, suitCards }) => {
     const suitCondition = userCondition && suitCards?.length === 0
     return (
         <div className='d-flex flex-column justify-content-center'>
-            <p style={{ display: suitCondition ? 'block' : 'none' }}>OMG, you don't have any suitable card to play. Please draw 1 card from pile.</p>
+            <p style={{ display: suitCondition ? 'block' : 'none', margin: 0, padding: 0 }}>OMG, you don't have any suitable card to play. Please draw 1 card from pile.</p>
             <div className={userCards?.imgs?.length > 8 ? styles.scrollbar_main : ''}>
                 {userCards?.imgs?.length !== 0
                     ? userCards?.imgs?.map((img, index) => (
