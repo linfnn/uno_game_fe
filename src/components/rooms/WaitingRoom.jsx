@@ -1,49 +1,29 @@
 import { CardBody, CardTitle, CardText, Button } from "reactstrap"
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { useEffect, useState } from "react";
-const WaitingRoom = ({ waitingRoom, setWaitingRoom, user, socket }) => {
-    const [started, setStarted] = useState(false)
+import { useDispatch, useSelector } from "react-redux";
+import { setWaitingRoom, togglePlayingRoom } from "../../store/roomReducer";
+import { toggleRuleModal } from "../../store/globalReducer";
+const WaitingRoom = ({ socket }) => {
+    // const [started, setStarted] = useState(false)
+    const dispatch = useDispatch()
+    const { loginRoom, waitingRoom } = useSelector(state => state.roomReducer)
     // leaveRoom
     const leaveRoom = () => {
-        socket.emit('leave', { username: user.username, roomCode: user.roomCode })
+        socket.emit('leave', { username: loginRoom.data.username, roomCode: loginRoom.data.roomCode, leaveFrom: 'waitingRoom' })
         socket.on('leaveStatus', (data) => {
             if (data === 'leaved successfully') {
-                setWaitingRoom(prev => {
-                    return {
-                        ...prev,
-                        status: false
-                    }
-                })
+                dispatch(setWaitingRoom({ status: false }))
             }
         })
-        console.log('leaved')
     }
-    useEffect(() => {
-        socket.on('leaved', (data) => {
-            console.log(`${data.username} leaved room ${data.roomCode}`);
-            setWaitingRoom(prev => {
-                return {
-                    status: data?.rooms?.host !== undefined ? prev.status : false,
-                    host: data?.rooms?.host,
-                    users: data?.rooms?.users,
-                    roomCode: data.roomCode
-                }
-            })
-        })
-    }, [socket])
-    // useEffect(() => {
-    //     socket.on('started', () => {
+    const startGame = () => {
+        socket.emit('start', { count: waitingRoom.users.length, roomCode: waitingRoom.roomCode, users: waitingRoom.users })
+    }
 
-    //     })
-    //     return () => {
-    //         // Clean up the Socket.IO connection on unmount
-    //         socket.disconnect();
-    //     };
-    // }, [])
-    // const startGame = () => {
-    //     socket.emit('start', { count: waitingRoom.users.length, users: waitingRoom.users })
-    //     // socket.on('started', () => setStarted(true))
-    // }
+    const openRule = () => {
+        dispatch(toggleRuleModal())
+    }
     return (
         <CardBody
             style={{ paddingTop: '0px' }}>
@@ -57,27 +37,39 @@ const WaitingRoom = ({ waitingRoom, setWaitingRoom, user, socket }) => {
                         : waitingRoom.users.map((username, index) => (
                             <li key={index}>
                                 <MdOutlineAccountCircle />
-                                <span className="mx-2" style={{ color: user.username === username ? 'green' : 'dark' }}>{username}</span>
+                                <span className="mx-2" style={{ color: loginRoom.data.username === username ? 'green' : 'dark' }}>{username}</span>
                             </li>
                         ))
                     }
                 </ul>
             </CardText>
             <CardText>
-                {user.username !== waitingRoom.host
-                    ? <div className='d-flex justify-content-center flex-column'>
+                {loginRoom.data.username !== waitingRoom.host
+                    ? <div>
                         <p>
                             Please wait for host to start the game
                         </p>
-                        <Button size='lg' className='mx-2' color='secondary' onClick={leaveRoom}>
-                            Back
-                        </Button>
+                        <div className='d-flex justify-content-center flex-wrap'>
+                            <Button size='lg' className='mx-2' color='secondary' onClick={leaveRoom}>
+                                Back
+                            </Button>
+                            <Button size='lg' className='mx-2' color='primary' onClick={openRule}>
+                                Rules
+                            </Button>
+                        </div>
                     </div>
                     : <div className='d-flex justify-content-center flex-wrap'>
                         <Button size='lg' className='mx-2' color='secondary' onClick={leaveRoom}>
                             Back
                         </Button>
-                        <Button size='lg' className='mx-2' color='success' >
+                        <Button size='lg' className='mx-2' color='primary' onClick={openRule}>
+                            Rules
+                        </Button>
+                        <Button
+                            size='lg' className='mx-2' color='success'
+                            onClick={startGame}
+                            disabled={waitingRoom.users.length === 1}
+                        >
                             Play now
                         </Button>
                     </div>

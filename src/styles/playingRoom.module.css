@@ -1,0 +1,112 @@
+.playing_room_container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  /* background */
+}
+.playing_room_bg {
+  background-image: url("../img/playing_room_bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+  filter: brightness(80%);
+}
+.playing_room_wrapper {
+  width: 80%;
+  height: 80%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+}
+.playing_room_wrapper_2 {
+  width: 80%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+  align-items: center;
+}
+
+.room2_wrapper {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user_wrapper {
+  display: flex;
+  flex-direction: column;
+  /* padding-right: 15px; */
+  width: 35%;
+}
+
+.user_img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  position: relative;
+}
+.user_progress {
+  position: absolute;
+  width: 70px !important;
+  height: 70px !important;
+}
+.card_imgs {
+  cursor: pointer;
+  padding-right: 3px;
+}
+.card_imgs_2 {
+  cursor: pointer;
+  margin-top: 5px;
+}
+.pile_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.scrollbar_main {
+  display: flex;
+  width: 65%;
+  margin: auto;
+  overflow-x: scroll;
+}
+.scrollbar_main::-webkit-scrollbar {
+  height: 6px;
+  border-radius: 10px;
+  background-color: white;
+}
+.scrollbar_main::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 10px;
+}
+/* Track */
+.scrollbar_main::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+.scrollbar_main::-webkit-scrollbar-thumb:hover {
+  background: #494848;
+}
+@media only screen and (max-width: 540px) {
+  .card_imgs {
+    padding-right: 0px;
+  }
+}
