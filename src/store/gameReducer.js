@@ -14,7 +14,8 @@ const initialGameState = {
     turn: {
         user: '',
         suitCards: [],
-        time: 15
+        time: 15,
+        passBtn: false
     },
     play: {
         roomCode: '',
@@ -72,6 +73,10 @@ const gameCreateSlice = createSlice({
             state.turn.user = action.payload.user
             state.turn.suitCards = action.payload.suitCards
             state.turn.time = 15
+            state.turn.passBtn = false
+            if (action.payload?.passBtn || action.payload.passBtn !== undefined) {
+                state.turn.passBtn = true
+            }
         },
         removeTurn: (state, action) => {
             state.turn.user = ''

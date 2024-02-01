@@ -27,13 +27,19 @@ const PlayDrawButton = ({ socket }) => {
         setColor(false)
         socket.emit('draw', { roomCode: waitingRoom.roomCode, pileCard: pileCards.topCard, index: userIndex, color: wildColor, auto: false })
     }
+    const passCard = () => {
+        setColor(false)
+        socket.emit('draw', { roomCode: waitingRoom.roomCode, pileCard: pileCards.topCard, index: userIndex })
+    }
     const disableCondition = turn.suitCards.length === 0 || play.card === ''
+    const passCondition = turn.passBtn
     return (
         <>
             <div className='d-flex flex-column mb-3' style={{ zIndex: 100 }}>
                 <div className="d-flex justify-content-evenly ">
                     <Button color='primary' onClick={drawCard}>Draw</Button>
                     <Button color='success' disabled={disableCondition} onClick={playCard}>Play</Button>
+                    <Button color='warning' style={{ display: passCondition ? 'block' : 'none' }} onClick={passCard}>Pass</Button>
                 </div>
                 {color
                     ? <>

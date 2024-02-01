@@ -115,6 +115,30 @@ const Rooms = () => {
                     // Xử lý animation
                     dispatch(togglePlayAnimation({ display: true, state: 'in', pileCard: data.pileCard, draw: data.draw, flag: 'draw' }))
                     // Xử lý lượt đi người tiếp theo
+                    if (data.nextUser.username === data.prevUser.username) {
+                        dispatch(setTurn({ user: data.nextUser.username, suitCards: data.suitCards, passBtn: true }))
+                    } else {
+                        dispatch(setTurn({ user: data.nextUser.username, suitCards: data.suitCards }))
+                    }
+                    dispatch(setCurrentUserIndex(data.nextUser.index))
+                    // Xử lý màu
+                    dispatch(setWildColor(data.wildColor))
+                })
+            }
+        })
+        socket.on('passed', (noti) => {
+            if (noti === 'user successfully passed') {
+                socket.on('nextTurn', (data) => {
+                    // Xử lý next turn nhận được dữ liệu pile card, user(tiếp theo), suitCards, wildColor
+                    // Xử lý hiện thị số lượng card 
+                    data.prevUser.username === loginRoom.data.username
+                        ? dispatch(setUserCards({ username: loginRoom.data.username, cards: data.prevUser.cards, imgs: data.prevUser.cards.map(card => imgArr[card]) }))
+                        : dispatch(setOtherUserCards({ username: data.prevUser.username, cards: data.prevUser.cards, imgs: Array(data.prevUser.cards.length).fill(imgArr.uno) }))
+                    // Xử lý pile card
+                    dispatch(setPileCards({ pileCard: data.pileCard, residualCards: data.residualCards }))
+                    // Xử lý animation
+                    dispatch(togglePlayAnimation({ display: true, flag: 'removeAnimation' }))
+                    // Xử lý lượt đi người tiếp theo
                     dispatch(setTurn({ user: data.nextUser.username, suitCards: data.suitCards }))
                     dispatch(setCurrentUserIndex(data.nextUser.index))
                     // Xử lý màu
@@ -122,7 +146,6 @@ const Rooms = () => {
                 })
             }
         })
-
     }, [socket])
     // console.log(playingRoom.status)
     // Animation
