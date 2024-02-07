@@ -13,9 +13,9 @@ import { removeTurn, setCurrentUserIndex, setOtherUserCards, setPileCards, setTu
 import renderCards from '../../data/cards';
 import { toggleRuleModal, toggleWinModal } from '../../store/globalReducer';
 
-
+const socket = io('http://localhost:8000');
 const Rooms = () => {
-    const socket = io('https://uno-game-be.onrender.com');
+
     // https://uno-game-be.onrender.com
     const [renderLogo, setRenderLogo] = useState(true)
 

@@ -10,6 +10,9 @@ import PlayDrawButton from './buttons/PlayDrawBtn';
 const Room5 = ({ loginRoom, waitingRoom, userCards, otherUserCards, pileCards, turn, socket }) => {
     const users = waitingRoom.users
     const loginData = loginRoom.data
+    // const users = ['nga', 'hong', 'nobi', 'trang', 'danhdiep']
+    // const loginData = { roomCode: 1, username: 'nobi' }
+    // // const userCards
     // Tìm vị trí của phần tử có giá trị là name trong mảng
     let index = users.indexOf(loginData.username);
     // Tạo mảng mới bằng cách sử dụng slice để cắt và nối các phần tử
@@ -103,7 +106,7 @@ const Room5 = ({ loginRoom, waitingRoom, userCards, otherUserCards, pileCards, t
                                             width: '100%',
                                             alignItems: 'center'
                                         }}>
-                                            <span style={{ rotate: '90deg' }}>{user}</span>
+                                            <span style={{ rotate: '90deg', padding: '10px 0px' }}>{user}</span>
                                             {turn?.user === user
                                                 ? <div className={animation.count_time_box} style={{ width: '90%' }}>
                                                     {/* <CountTimeProgress progress={progress} time={countDown.time} /> */}
@@ -112,7 +115,7 @@ const Room5 = ({ loginRoom, waitingRoom, userCards, otherUserCards, pileCards, t
                                                 : <></>
                                             }
 
-                                            <div style={{ width: otherUserCards.find(obj => obj.username === user)?.imgs.length < 7 ? '' : innerWidth > 425 && innerWidth <= 768 ? '36%' : '45%' }}>
+                                            <div style={{ width: otherUserCards.find(obj => obj.username === user)?.imgs.length < 7 ? '' : innerWidth > 425 && innerWidth <= 768 ? '52%' : innerWidth > 768 ? '40%' : '60%' }}>
                                                 <UserCards2 userCards={otherUserCards.find(obj => obj.username === user)} innerWidth={innerWidth} />
                                             </div>
 
