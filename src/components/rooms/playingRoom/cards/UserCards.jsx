@@ -58,7 +58,7 @@ export const UserCards2 = ({ userCards, innerWidth, suitCards }) => {
         marginLeft: innerWidth <= 550 ? -28 : -25
     }
     return (
-        <div className={userCards?.imgs?.length > 8 ? styles.scrollbar_main : ''} style={{
+        <div className={userCards?.imgs?.length >= 8 ? styles.scrollbar_main : ''} style={{
             // marginLeft: rotate ? 10 : 0,
             width: '100%'
             // rotate: rotate ? '270deg' : '',

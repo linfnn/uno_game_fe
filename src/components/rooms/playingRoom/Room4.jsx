@@ -74,6 +74,7 @@ const Room4 = ({ loginRoom, waitingRoom, userCards, otherUserCards, pileCards, t
                     </div>
                     <UserCards2 userCards={otherUserCards.find(obj => obj.username === newUsers[2])} innerWidth={innerWidth} />
                 </div >
+                {/* Left & right */}
                 <div style={{ position: 'absolute', top: '28%', width: '100%', height: '40%' }}>
                     <div className='w-100 d-flex justify-content-evenly align-items-center h-100'>
                         {[newUsers[1], newUsers[3]].map((user, index) => (
@@ -92,7 +93,7 @@ const Room4 = ({ loginRoom, waitingRoom, userCards, otherUserCards, pileCards, t
                                             height: '100%',
                                             width: '100%'
                                         }}>
-                                            <span style={{ rotate: '90deg' }}>{user}</span>
+                                            <span>{user}</span>
                                             {turn?.user === user
                                                 ? <div className={animation.count_time_box}>
                                                     <div className={animation.count_time_bar} style={{ width: '38%' }}></div>

@@ -15,7 +15,7 @@ import { toggleRuleModal, toggleWinModal } from '../../store/globalReducer';
 
 
 const Rooms = () => {
-    const socket = io('https://uno-game-be.onrender.com');
+    const socket = io('http://localhost:8000');
     // https://uno-game-be.onrender.com
     const [renderLogo, setRenderLogo] = useState(true)
 

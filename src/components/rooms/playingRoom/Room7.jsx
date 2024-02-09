@@ -104,7 +104,7 @@ const Room7 = ({ loginRoom, waitingRoom, userCards, otherUserCards, pileCards, t
                                             width: '100%',
                                             alignItems: 'center'
                                         }}>
-                                            <span style={{ rotate: '90deg' }}>{user}</span>
+                                            <span>{user}</span>
                                             {turn?.user === user
                                                 ? <div className={animation.count_time_box} style={{ width: '100%' }}>
                                                     <div className={animation.count_time_bar} style={{ width: '30%' }}></div>
@@ -137,7 +137,7 @@ const Room7 = ({ loginRoom, waitingRoom, userCards, otherUserCards, pileCards, t
                                             width: '100%',
                                             alignItems: 'center'
                                         }}>
-                                            <span style={{ rotate: '90deg' }}>{user}</span>
+                                            <span>{user}</span>
                                             {turn?.user === user
                                                 ? <div className={animation.count_time_box} style={{ width: '100%' }}>
                                                     <div className={animation.count_time_bar} style={{ width: '30%' }}></div>

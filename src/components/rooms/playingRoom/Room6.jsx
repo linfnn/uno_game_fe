@@ -57,7 +57,7 @@ const Room6 = ({ loginRoom, waitingRoom, userCards, otherUserCards, pileCards, t
                 {/* Players top */}
                 <div
                     className='d-flex align-items-center flex-column'
-                    style={{ width: otherUserCards.find(obj => obj.username === newUsers[3]).length > 8 ? '28%' : '90%' }}
+                    style={{ width: otherUserCards.find(obj => obj.username === newUsers[3])?.length > 8 ? '28%' : '' }}
                 >
                     <div className={styles.user_wrapper} style={{ width: '100%' }}>
                         <span>{newUsers[3]}</span>
@@ -68,7 +68,7 @@ const Room6 = ({ loginRoom, waitingRoom, userCards, otherUserCards, pileCards, t
                             : <></>
                         }
                     </div>
-                    <div style={{ width: otherUserCards.find(obj => obj.username === newUsers[3])?.imgs.length <= 7 ? '' : innerWidth > 768 ? '45%' : '90%' }}>
+                    <div style={{ width: otherUserCards.find(obj => obj.username === newUsers[3])?.imgs.length <= 7 ? '' : innerWidth > 768 ? '65%' : '80%' }}>
                         <UserCards2 userCards={otherUserCards.find(obj => obj.username === newUsers[3])} innerWidth={innerWidth} />
                     </div>
                 </div >
@@ -92,7 +92,7 @@ const Room6 = ({ loginRoom, waitingRoom, userCards, otherUserCards, pileCards, t
                                             width: '100%',
                                             alignItems: 'center'
                                         }}>
-                                            <span style={{ rotate: '90deg' }}>{user}</span>
+                                            <span>{user}</span>
                                             {turn?.user === user
                                                 ? <div className={animation.count_time_box} style={{ width: '100%' }}>
                                                     <div className={animation.count_time_bar} style={{ width: '28%' }}></div>
@@ -125,7 +125,7 @@ const Room6 = ({ loginRoom, waitingRoom, userCards, otherUserCards, pileCards, t
                                             width: '100%',
                                             alignItems: 'center'
                                         }}>
-                                            <span style={{ rotate: '90deg' }}>{user}</span>
+                                            <span>{user}</span>
                                             {turn?.user === user
                                                 ? <div className={animation.count_time_box} style={{ width: '100%' }}>
                                                     <div className={animation.count_time_bar} style={{ width: '28%' }}></div>
