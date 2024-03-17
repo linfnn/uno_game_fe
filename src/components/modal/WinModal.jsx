@@ -19,7 +19,7 @@ export default function WinModal({ socket }) {
     const dispatch = useDispatch()
 
     const backHome = () => {
-        socket.emit('leave', { username: loginRoom.data.username, roomCode: loginRoom.data.roomCode, leaveFrom: 'playingRoom' })
+        // socket.emit('leave', { username: loginRoom.data.username, roomCode: loginRoom.data.roomCode, leaveFrom: 'playingRoom' })
         dispatch(toggleWinModal({ state: false, user: '' }))
         window.location.reload()
     }

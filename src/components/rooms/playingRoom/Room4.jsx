@@ -72,7 +72,9 @@ const Room4 = ({ loginRoom, waitingRoom, userCards, otherUserCards, pileCards, t
                             : <></>
                         }
                     </div>
-                    <UserCards2 userCards={otherUserCards.find(obj => obj.username === newUsers[2])} innerWidth={innerWidth} />
+                    <div className='w-50'>
+                        <UserCards2 userCards={otherUserCards.find(obj => obj.username === newUsers[2])} innerWidth={innerWidth} />
+                    </div>
                 </div >
                 {/* Left & right */}
                 <div style={{ position: 'absolute', top: '28%', width: '100%', height: '40%' }}>
@@ -87,7 +89,8 @@ const Room4 = ({ loginRoom, waitingRoom, userCards, otherUserCards, pileCards, t
                                         }}
                                     >
                                         <div className={styles.user_wrapper} style={{
-                                            rotate: '270deg',
+                                            // rotate: '270deg',
+                                            transform: 'rotate(270deg)',
                                             flexDirection: index === 1 ? 'column-reverse' : 'column',
                                             zIndex: 10,
                                             height: '100%',

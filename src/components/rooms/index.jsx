@@ -8,18 +8,19 @@ import LoginRoom from './LoginRoom';
 import WaitingRoom from './WaitingRoom';
 import PlayingRoom from './playingRoom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setWaitingRoom, togglePlayingRoom } from '../../store/roomReducer';
+import { setWaitingRoom, togglePendingState, togglePlayingRoom } from '../../store/roomReducer';
 import { removeTurn, setCurrentUserIndex, setOtherUserCards, setPileCards, setTurn, setUserCards, setWildColor, togglePlayAnimation } from '../../store/gameReducer';
 import renderCards from '../../data/cards';
 import { toggleRuleModal, toggleWinModal } from '../../store/globalReducer';
-
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Rooms = () => {
     const socket = io('https://uno-game-be.onrender.com');
+    // http://localhost:8000
     // https://uno-game-be.onrender.com
     const [renderLogo, setRenderLogo] = useState(true)
 
-    const { loginRoom, waitingRoom, playingRoom } = useSelector(state => state.roomReducer)
+    const { loginRoom, waitingRoom, playingRoom, pending } = useSelector(state => state.roomReducer)
     const { ruleModal } = useSelector(state => state.globalReducer)
 
     const dispatch = useDispatch()
@@ -45,6 +46,7 @@ const Rooms = () => {
                 dispatch(toggleRuleModal())
             }
             if (data) {
+                dispatch(togglePendingState(false))
                 socket.on('divided', dividedCard => {
                     const username = loginRoom.data.username
                     const cards = dividedCard.userCards
@@ -160,32 +162,34 @@ const Rooms = () => {
 
     return (
         <div className={styles.login_container}>
-            {playingRoom.status === false
-                ? <div className={styles.login_wrapper}>
-                    <img src={logo} alt='logo'
-                        style={{ display: renderLogo ? 'block' : 'none' }}
-                        className={`${styles.login_logo} animate__animated animate__fadeOutUp animate__delay-2s animate__fast`}
-                    />
-                    <Card
-                        style={{
-                            display: renderLogo ? 'none' : 'flex'
-                        }}
-                        className={`${styles.login_card} animate__animated animate__zoomIn animate__fast`}
-                    >
-                        <img
-                            alt="Sample"
-                            src={logo}
-                            style={{ width: "50%", padding: '25px 0' }}
+            {pending
+                ? <CircularProgress style={{ zIndex: 10 }} />
+                : playingRoom.status === false
+                    ? <div className={styles.login_wrapper}>
+                        <img src={logo} alt='logo'
+                            style={{ display: renderLogo ? 'block' : 'none' }}
+                            className={`${styles.login_logo} animate__animated animate__fadeOutUp animate__delay-2s animate__fast`}
                         />
-                        {
-                            waitingRoom.status === false
-                                ? <LoginRoom socket={socket} />
-                                : <WaitingRoom socket={socket} />
-                        }
-                    </Card>
-                    {/* <PlayingRoom /> */}
-                </div>
-                : <PlayingRoom socket={socket} />
+                        <Card
+                            style={{
+                                display: renderLogo ? 'none' : 'flex'
+                            }}
+                            className={`${styles.login_card} animate__animated animate__zoomIn animate__fast`}
+                        >
+                            <img
+                                alt="Sample"
+                                src={logo}
+                                style={{ width: "50%", padding: '25px 0' }}
+                            />
+                            {
+                                waitingRoom.status === false
+                                    ? <LoginRoom socket={socket} />
+                                    : <WaitingRoom socket={socket} />
+                            }
+                        </Card>
+                        {/* <PlayingRoom /> */}
+                    </div>
+                    : <PlayingRoom socket={socket} />
             }
         </div>
     )

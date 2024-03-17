@@ -20,7 +20,8 @@ const initialRoomState = {
     },
     playingRoom: {
         status: false
-    }
+    },
+    pending: false
 }
 
 const roomCreateSlice = createSlice({
@@ -59,7 +60,9 @@ const roomCreateSlice = createSlice({
             state.playingRoom.status = action.payload.playingRoom
             state.waitingRoom.status = action.payload.waitingRoom
         },
-
+        togglePendingState: (state, action) => {
+            state.pending = action.payload
+        }
     }
 })
 
@@ -67,7 +70,8 @@ export const {
     // toggleDetailDialog,
     setUsername, setRoomCode, setInvalidData,
     setWaitingRoom,
-    togglePlayingRoom
+    togglePlayingRoom,
+    togglePendingState
 } = roomCreateSlice.actions
 
 export default roomCreateSlice.reducer;

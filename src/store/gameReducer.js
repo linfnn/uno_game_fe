@@ -44,7 +44,7 @@ const initialGameState = {
 }
 
 const gameCreateSlice = createSlice({
-    name: 'globalReducer',
+    name: 'gameReducer',
     initialState: initialGameState,
     reducers: {
         setUserCards: (state, action) => {

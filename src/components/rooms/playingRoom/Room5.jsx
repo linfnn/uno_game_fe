@@ -99,7 +99,8 @@ const Room5 = ({ loginRoom, waitingRoom, userCards, otherUserCards, pileCards, t
                                         }}
                                     >
                                         <div className={styles.user_wrapper} style={{
-                                            rotate: '270deg',
+                                            // rotate: '270deg',
+                                            transform: 'rotate(270deg)',
                                             flexDirection: index === 1 ? 'column-reverse' : 'column',
                                             zIndex: 10,
                                             height: '100%',

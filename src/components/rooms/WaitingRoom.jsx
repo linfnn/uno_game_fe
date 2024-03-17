@@ -2,7 +2,7 @@ import { CardBody, CardTitle, CardText, Button } from "reactstrap"
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setWaitingRoom, togglePlayingRoom } from "../../store/roomReducer";
+import { setWaitingRoom, togglePendingState, togglePlayingRoom } from "../../store/roomReducer";
 import { toggleRuleModal } from "../../store/globalReducer";
 const WaitingRoom = ({ socket }) => {
     // const [started, setStarted] = useState(false)
@@ -18,6 +18,7 @@ const WaitingRoom = ({ socket }) => {
         })
     }
     const startGame = () => {
+        dispatch(togglePendingState(true))
         socket.emit('start', { count: waitingRoom.users.length, roomCode: waitingRoom.roomCode, users: waitingRoom.users })
     }
 
